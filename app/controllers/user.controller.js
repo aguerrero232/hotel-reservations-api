@@ -81,11 +81,11 @@ exports.findOne = (req, res) => {
 // Update a reservation identified by the reservationId in the request
 exports.update = (req, res) => {
     // Validate request
-    console.log("Updating User");
+    // console.log("Updating User");
 
-    console.log("\nRequest Body :");
+    // console.log("\nRequest Body :");
 
-    console.log(req.body);
+    // console.log(req.body);
 
     if (!req.body.name) {
         return res.status(400).send({
@@ -93,16 +93,16 @@ exports.update = (req, res) => {
         });
     }
 
-    if (!req.body.numRoomsTotal) {
-        return res.status(400).send({
-            message: "Number of rooms in Hotel can not be empty"
-        });
 
+    if (!req.body.email) {
+        return res.status(400).send({
+            message: "Username can not be empty"
+        });
     }
 
-    if (!req.body.roomTypes) {
+    if (!req.body.password) {
         return res.status(400).send({
-            message: "Hotel Room Types and Prices can not be empty"
+            message: "Username can not be empty"
         });
     }
 
