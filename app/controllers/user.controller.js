@@ -81,11 +81,6 @@ exports.findOne = (req, res) => {
 // Update a reservation identified by the reservationId in the request
 exports.update = (req, res) => {
     // Validate request
-    // console.log("Updating User");
-
-    // console.log("\nRequest Body :");
-
-    // console.log(req.body);
 
     if (!req.body.name) {
         return res.status(400).send({

@@ -5,7 +5,7 @@ module.exports = (app) => {
     app.post('/reservations', reservations.create);
 
     // Retrieve all reservations from a hotel
-    app.get('/reservations', reservations.findAll);
+    app.get('/reservations/:hotelId', reservations.findAll);
 
     // Retrieve a single reservations with reservationId
     app.get('/reservations/:reservationId', reservations.findOne);

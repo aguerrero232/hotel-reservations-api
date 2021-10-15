@@ -53,18 +53,18 @@ exports.create = (req, res) => {
             start: req.body.start,
             end: req.body.end,
             price: req.body.price
-            
+
         });
 
         // Save reservation, add to db
         reservation.save()
-        .then(data => {
-            res.send(data);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating the reservation."
+            .then(data => {
+                res.send(data);
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while creating the reservation."
+                });
             });
-        });
 
     }).catch(err => {
 
@@ -84,18 +84,18 @@ exports.create = (req, res) => {
 
 // Retrieve and return all reservations from the database.
 exports.findAll = (req, res) => {
-   
-    Hotel.findById(req.body._hotelId).then(hotel => {
+
+    Hotel.findById(req.params.hotelId).then(hotel => {
 
         if (!hotel) {
             return res.status(404).send({
-                message: "Hotel not found with id " + req.body._hotelId
+                message: "Hotel not found with id " + req.params.hotelId
             });
         }
-        
+
         Reservation.find()
             .then(reservations => {
-                res.send(reservations); 
+                res.send(reservations);
             }).catch(err => {
                 res.status(500).send({
                     message: err.message || "Some error occurred while retrieving reservations."
@@ -106,16 +106,16 @@ exports.findAll = (req, res) => {
 
         if (err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Hotel not found with id " + req.body._hotelId
+                message: "Hotel not found with id " + req.params.hotelId
             });
         }
 
         return res.status(500).send({
-            message: "Error retrieving reservation with id " + req.body._hotelId
+            message: "Error retrieving reservation with id " + req.params.hotelId
         });
 
     });
-   
+
 };
 
 // Find a single reservation with a reservationId
@@ -174,7 +174,7 @@ exports.update = (req, res) => {
             room: req.body.room,
             start: req.body.start,
             end: req.body.end,
-            price: req.body.price            
+            price: req.body.price
         }, {
             new: true
         })
