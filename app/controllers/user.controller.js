@@ -82,6 +82,7 @@ exports.findOne = (req, res) => {
 // Update a reservation identified by the reservationId in the request
 exports.update = (req, res) => {
     // Validate request
+    console.log(req.body);
 
     if (!req.body.name) {
         return res.status(400).send({
@@ -107,7 +108,7 @@ exports.update = (req, res) => {
             email: req.body.email,
             password: req.body.password,
             name: req.body.name,
-            reservationsIds: req.body.reservationIds,
+            reservationIds: req.body.reservationIds,
             hotelIds: req.body.hotelIds,
             isAdmin: req.body.isAdmin
         }, {
