@@ -5,6 +5,7 @@ const UserSchema = mongoose.Schema({
     password: String,
     name: String,
     reservationIds: [String],
+    hotelIds: [String],
     isAdmin: Number
 });
 

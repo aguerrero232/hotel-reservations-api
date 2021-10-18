@@ -22,18 +22,14 @@ exports.create = (req, res) => {
             message: "Number of hotel Rooms can not be empty"
         });
     }
-    
+
     if (!req.body.rooms) {
         return res.status(400).send({
-        message: "Rooms can not be empty"
+            message: "Rooms can not be empty"
         });
     }
-    // else{
-    //     req.body.rooms.forEach( room => console.log(room));
-    // }
 
-    //need to check logic in these files
-    
+
     // Create a Hotel
     const hotel = new Hotel({
         name: req.body.name,
@@ -68,7 +64,7 @@ exports.findAll = (req, res) => {
 
 // Find a single hotel with a hotelId
 exports.findOne = (req, res) => {
-    
+
     // http://localhost:3000/hotels/6130c423ebe0aa1ec4113875
     // console.log(req.params) // use this for debugging
 
@@ -96,7 +92,7 @@ exports.findOne = (req, res) => {
 // Update a hotel identified by the hotelId in the request
 exports.update = (req, res) => {
 
-   // Validate request
+    // Validate request
     if (!req.body.name) {
         return res.status(400).send({
             message: "Hotel name can not be empty"
@@ -114,17 +110,17 @@ exports.update = (req, res) => {
             message: "Number of hotel Rooms can not be empty"
         });
     }
-    
+
     if (!req.body.rooms) {
         return res.status(400).send({
-        message: "Rooms can not be empty"
+            message: "Rooms can not be empty"
         });
     }
     // else{
     //     req.body.rooms.forEach( room => console.log(room));
     // }
 
-    
+
     // Find hotel and update it with the request body
     Hotel.findByIdAndUpdate(req.params.hotelId, {
             name: req.body.name,

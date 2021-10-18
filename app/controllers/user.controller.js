@@ -28,6 +28,7 @@ exports.create = (req, res) => {
         password: req.body.password,
         name: req.body.name,
         reservationIds: [],
+        hotelIds: [],
         isAdmin: req.body.isAdmin || 0
     });
 
@@ -107,6 +108,7 @@ exports.update = (req, res) => {
             password: req.body.password,
             name: req.body.name,
             reservationsIds: req.body.reservationIds,
+            hotelIds: req.body.hotelIds,
             isAdmin: req.body.isAdmin
         }, {
             new: true
