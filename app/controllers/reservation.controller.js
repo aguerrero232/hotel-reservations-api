@@ -84,38 +84,14 @@ exports.create = (req, res) => {
 
 // Retrieve and return all reservations from the database.
 exports.findAll = (req, res) => {
-
-    Hotel.findById(req.params.hotelId).then(hotel => {
-
-        if (!hotel) {
-            return res.status(404).send({
-                message: "Hotel not found with id " + req.params.hotelId
+    Reservation.find()
+        .then(reservations => {
+            res.send(reservations);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving reservations."
             });
-        }
-
-        Reservation.find()
-            .then(reservations => {
-                res.send(reservations);
-            }).catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occurred while retrieving reservations."
-                });
-            });
-
-    }).catch(err => {
-
-        if (err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Hotel not found with id " + req.params.hotelId
-            });
-        }
-
-        return res.status(500).send({
-            message: "Error retrieving reservation with id " + req.params.hotelId
         });
-
-    });
-
 };
 
 // Find a single reservation with a reservationId

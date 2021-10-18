@@ -11,6 +11,12 @@ exports.create = (req, res) => {
         });
     }
 
+    if (!req.body.adminId) {
+        return res.status(400).send({
+            message: "Must Provide Admin ID"
+        });
+    }
+
     if (!req.body.rooms) {
         return res.status(400).send({
             message: "Hotel Rooms data can not be empty"
@@ -32,6 +38,7 @@ exports.create = (req, res) => {
 
     // Create a Hotel
     const hotel = new Hotel({
+        adminId: req.body.adminId,
         name: req.body.name,
         amenities: req.body.amenities || "",
         numRooms: req.body.numRooms,
@@ -99,6 +106,12 @@ exports.update = (req, res) => {
         });
     }
 
+    if (!req.body.adminId) {
+        return res.status(400).send({
+            message: "Must Provide Admin ID"
+        });
+    }
+
     if (!req.body.rooms) {
         return res.status(400).send({
             message: "Hotel Rooms data can not be empty"
@@ -123,6 +136,7 @@ exports.update = (req, res) => {
 
     // Find hotel and update it with the request body
     Hotel.findByIdAndUpdate(req.params.hotelId, {
+            adminId: req.body.adminId,
             name: req.body.name,
             amenities: req.body.amenities || "",
             numRooms: req.body.numRooms,
