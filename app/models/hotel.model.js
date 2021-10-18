@@ -1,69 +1,304 @@
 const mongoose = require('mongoose');
 
 const HotelSchema = mongoose.Schema({
-
     name: String,
     amenities: [String],
     numRooms: Number,
-    
-    rooms: {
-        standard: { name: String, price: Number },
-        queen: { name: String, price: Number }, 
-        king: { name: String, price: Number }    
-    },
-
+    rooms:[ { 
+        name: String, 
+        price: Number, 
+        numRoomsTotal: Number, 
+        numRoomsAvailable: Number 
+    }],
     weekendDiff: Number
-
 });
 
 module.exports = mongoose.model('Hotel', HotelSchema);
 
 
-// Develop a software product that manages hotel reservations across a group of hotels of varying
-// characteristics. The software must have the following features:
-// • Create/Modify User Information
-// • Create/Modify Hotel Properties
-// o Hotels must include at least:
-//  Amenities: gym, spa, pool, business office, WiFi
-//  Types of Rooms and number of rooms
-//  Price for each room
-// • Price should vary based on weekday vs weekend
-// o There must be at least 10 different types of hotel properties
-// • Create/Modify Reservation information
-// • Ability to search based on criteria:
-// o Price range
-// o Date range
-// o Amenities
-// o Room availability
-// • You must have an intuitive UI/UX
-// Your group must decide what language to create this software. Each team will consist of 5 people and your
-// group must turn in a writeup of your project with justifications to why your team approached it the way you
-// did. There will also be a 15-minute presentation of your project and you must show it’s functionality. 
-// {
-//     "name": "Hotel Sample 1",
-//     "roomTypes": [{
-//         _id: "0",
-//         typeName: "1 Bed Suite",
-//         totalRooms: 75,
-//         fee: 100
-//     }, {
-//         _id: "1",
-//         typeName: "2 Bed Suite",
-//         totalRooms: "45",
-//         fee: "175"
-//     }],
-//     amenities["gym", "spa", "pool", "business office", "WiFi"]
-// }
-// The Magnolia All Suites
-// Amenities: Pool, Gym, Spa, Business Office
-// Number of Rooms: 20
-// Room Price per night: $100 - Standard, $150 - Queen, $250 – King
-// Weekend Differential: 25% nightly rate surcharge
-// The Lofts at Town Centre
-// Amenities: Pool, Gym, Business Office
-// Number of Rooms: 60
-// Room Price per night: $105 - Standard, $120 - Queen, $190 – King
+//  {
+//         "rooms": [
+//                   {
+//                 "name": "Standard",
+//                 "price": 25,
+//                 "numRoomsTotal": 30, 
+//                 "numRoomsAvailable": 12
+//             },
+//             {
+//                 "name": "Queen",
+//                 "price": 50,
+//                 "numRoomsTotal": 20, 
+//                 "numRoomsAvailable": 2
+//             },
+//             {
+//                 "name": "King",
+//                 "price": 130,
+//                 "numRoomsTotal": 10, 
+//                 "numRoomsAvailable": 0
+//             }
+//         ],
+//         "amenities": [
+//             "Pool"
+//         ],
+//         "name": "Rio Inn",
+//         "numRooms": 50,
+//         "weekendDiff": 20
+//  }
 
 
 
-
+// //old hotels models db 
+// [
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 25
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": -1
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": -1
+//             }
+//         },
+//         "amenities": [
+//             "Pool"
+//         ],
+//         "_id": "61607735bb4eb7910895214c",
+//         "name": "Rio Inn",
+//         "numRooms": 50,
+//         "weekendDiff": 20,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 50
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": -1
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": -1
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Business Office"
+//         ],
+//         "_id": "61607780bb4eb7910895214e",
+//         "name": "HomeAway Inn",
+//         "numRooms": 30,
+//         "weekendDiff": 25,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 40
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 60
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 80
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Gym"
+//         ],
+//         "_id": "6160780ebb4eb79108952152",
+//         "name": "Sun Palace Inn",
+//         "numRooms": 50,
+//         "weekendDiff": 25,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 30
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 50
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": -1
+//             }
+//         },
+//         "amenities": [],
+//         "_id": "61607831bb4eb79108952154",
+//         "name": "The Comfy Motel Place",
+//         "numRooms": 50,
+//         "weekendDiff": 10,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 25
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 50
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 60
+//             }
+//         },
+//         "amenities": [
+//             "Pool"
+//         ],
+//         "_id": "61607851bb4eb79108952156",
+//         "name": "Town Inn Budget Rooms",
+//         "numRooms": 150,
+//         "weekendDiff": 15,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 100
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 150
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 250
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Gym",
+//             "Spa",
+//             "Business Office"
+//         ],
+//         "_id": "6160789fbb4eb79108952158",
+//         "name": "The Regency Rooms",
+//         "numRooms": 20,
+//         "weekendDiff": 25,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 100
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 150
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 250
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Gym",
+//             "Spa",
+//             "Business Office"
+//         ],
+//         "_id": "616078b7bb4eb7910895215a",
+//         "name": "The Courtyard Suites",
+//         "numRooms": 20,
+//         "weekendDiff": 25,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 50
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 75
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 90
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Gym"
+//         ],
+//         "_id": "616078f2bb4eb7910895215c",
+//         "name": "Park North Hotel",
+//         "numRooms": 100,
+//         "weekendDiff": 15,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 105
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 120
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 190
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Gym",
+//             "Business Office"
+//         ],
+//         "_id": "61607912bb4eb7910895215e",
+//         "name": "The Lofts at Town Centre",
+//         "numRooms": 60,
+//         "weekendDiff": 35,
+//         "__v": 0
+//     },
+//     {
+//         "rooms": {
+//             "standard": {
+//                 "name": "Standard",
+//                 "price": 100
+//             },
+//             "queen": {
+//                 "name": "Queen",
+//                 "price": 150
+//             },
+//             "king": {
+//                 "name": "King",
+//                 "price": 250
+//             }
+//         },
+//         "amenities": [
+//             "Pool",
+//             "Gym",
+//             "Spa",
+//             "Business Office"
+//         ],
+//         "_id": "6160793abb4eb79108952160",
+//         "name": "The Magnolia All Suites",
+//         "numRooms": 20,
+//         "weekendDiff": 25,
+//         "__v": 0
+//     }
+// ]
