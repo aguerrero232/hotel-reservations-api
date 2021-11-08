@@ -49,7 +49,7 @@ exports.create = (req, res) => {
         // Create a reservation
         const reservation = new Reservation({
             _hotelID: req.body._hotelId,
-            _userID: req.body._userID,
+            _userID: req.body._userId,
             room: req.body.room,
             start: req.body.start,
             end: req.body.end,
