@@ -20,6 +20,12 @@ exports.create = (req, res) => {
         });
     }
 
+    if (!req.body._userId) {
+        return res.status(400).send({
+            message: "User ID is a paramater and can not be empty"
+        });
+    }
+
     if (!req.body.room) {
         return res.status(400).send({
             message: "Hotel room can not be empty"
@@ -126,6 +132,12 @@ exports.update = (req, res) => {
         });
     }
 
+    if (!req.body._userId) {
+        return res.status(400).send({
+            message: "User ID is a paramater and can not be empty"
+        });
+    }
+
     if (!req.body.room) {
         return res.status(400).send({
             message: "Hotel room can not be empty"
@@ -148,7 +160,7 @@ exports.update = (req, res) => {
     Reservation.findByIdAndUpdate(req.params.reservationId, {
             // Create a reservation
             _hotelID: req.body._hotelId,
-            _userID: req.body._userID,
+            _userID: req.body._userId,
             room: req.body.room,
             start: req.body.start,
             end: req.body.end,
