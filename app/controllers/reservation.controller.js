@@ -20,6 +20,12 @@ exports.create = (req, res) => {
         });
     }
 
+    if (!req.body._userId) {
+        return res.status(400).send({
+            message: "User ID is a paramater and can not be empty"
+        });
+    }
+
     if (!req.body.room) {
         return res.status(400).send({
             message: "Hotel room can not be empty"
@@ -49,6 +55,7 @@ exports.create = (req, res) => {
         // Create a reservation
         const reservation = new Reservation({
             _hotelID: req.body._hotelId,
+            _userID: req.body._userId,
             room: req.body.room,
             start: req.body.start,
             end: req.body.end,
@@ -84,38 +91,14 @@ exports.create = (req, res) => {
 
 // Retrieve and return all reservations from the database.
 exports.findAll = (req, res) => {
-
-    Hotel.findById(req.params.hotelId).then(hotel => {
-
-        if (!hotel) {
-            return res.status(404).send({
-                message: "Hotel not found with id " + req.params.hotelId
+    Reservation.find()
+        .then(reservations => {
+            res.send(reservations);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving reservations."
             });
-        }
-
-        Reservation.find()
-            .then(reservations => {
-                res.send(reservations);
-            }).catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occurred while retrieving reservations."
-                });
-            });
-
-    }).catch(err => {
-
-        if (err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Hotel not found with id " + req.params.hotelId
-            });
-        }
-
-        return res.status(500).send({
-            message: "Error retrieving reservation with id " + req.params.hotelId
         });
-
-    });
-
 };
 
 // Find a single reservation with a reservationId
@@ -149,6 +132,12 @@ exports.update = (req, res) => {
         });
     }
 
+    if (!req.body._userId) {
+        return res.status(400).send({
+            message: "User ID is a paramater and can not be empty"
+        });
+    }
+
     if (!req.body.room) {
         return res.status(400).send({
             message: "Hotel room can not be empty"
@@ -171,6 +160,7 @@ exports.update = (req, res) => {
     Reservation.findByIdAndUpdate(req.params.reservationId, {
             // Create a reservation
             _hotelID: req.body._hotelId,
+            _userID: req.body._userId,
             room: req.body.room,
             start: req.body.start,
             end: req.body.end,

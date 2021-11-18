@@ -3,10 +3,17 @@ const Hotel = require('../models/hotel.model.js');
 // Create and Save a new Hotel
 exports.create = (req, res) => {
 
+    // console.log(req.body);
     // Validate request
     if (!req.body.name) {
         return res.status(400).send({
             message: "Hotel name can not be empty"
+        });
+    }
+
+    if (!req.body.adminId) {
+        return res.status(400).send({
+            message: "Must Provide Admin ID"
         });
     }
 
@@ -22,12 +29,18 @@ exports.create = (req, res) => {
         });
     }
 
-    //need to check logic in these files
-    
+    if (!req.body.rooms) {
+        return res.status(400).send({
+            message: "Rooms can not be empty"
+        });
+    }
+
+
     // Create a Hotel
     const hotel = new Hotel({
+        adminId: req.body.adminId,
         name: req.body.name,
-        amenities: req.body.amenities || "N/A",
+        amenities: req.body.amenities || "",
         numRooms: req.body.numRooms,
         rooms: req.body.rooms,
         weekendDiff: req.body.weekendDiff || 0
@@ -58,7 +71,7 @@ exports.findAll = (req, res) => {
 
 // Find a single hotel with a hotelId
 exports.findOne = (req, res) => {
-    
+
     // http://localhost:3000/hotels/6130c423ebe0aa1ec4113875
     // console.log(req.params) // use this for debugging
 
@@ -93,6 +106,12 @@ exports.update = (req, res) => {
         });
     }
 
+    if (!req.body.adminId) {
+        return res.status(400).send({
+            message: "Must Provide Admin ID"
+        });
+    }
+
     if (!req.body.rooms) {
         return res.status(400).send({
             message: "Hotel Rooms data can not be empty"
@@ -104,11 +123,22 @@ exports.update = (req, res) => {
             message: "Number of hotel Rooms can not be empty"
         });
     }
-    
+
+    if (!req.body.rooms) {
+        return res.status(400).send({
+            message: "Rooms can not be empty"
+        });
+    }
+    // else{
+    //     req.body.rooms.forEach( room => console.log(room));
+    // }
+
+
     // Find hotel and update it with the request body
     Hotel.findByIdAndUpdate(req.params.hotelId, {
+            adminId: req.body.adminId,
             name: req.body.name,
-            amenities: req.body.amenities || "N/A",
+            amenities: req.body.amenities || "",
             numRooms: req.body.numRooms,
             rooms: req.body.rooms,
             weekendDiff: req.body.weekendDiff || 0
