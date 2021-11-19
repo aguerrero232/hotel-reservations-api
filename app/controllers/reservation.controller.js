@@ -91,8 +91,10 @@ exports.create = (req, res) => {
 
 // Retrieve and return all reservations from the database.
 exports.findAll = (req, res) => {
+    console.log("in");
     Reservation.find()
         .then(reservations => {
+            console.log("in");
             res.send(reservations);
         }).catch(err => {
             res.status(500).send({

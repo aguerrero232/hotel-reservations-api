@@ -44,7 +44,7 @@ exports.create = (req, res) => {
 
 };
 
-// Retrieve and return all reservations from the database.
+// Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
     User.find()
         .then(users => {

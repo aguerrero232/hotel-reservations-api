@@ -1,10 +1,10 @@
 module.exports = (app) => {
     const reservations = require('../controllers/reservation.controller.js');
 
-    // Create a new reservation at a hotel
+    // Create a new reservation at a res
     app.post('/reservations', reservations.create);
 
-    // Retrieve all reservations from a hotel
+    // Retrieve all reservations from a res
     app.get('/reservations', reservations.findAll);
 
     // Retrieve a single reservations with reservationId
