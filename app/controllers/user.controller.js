@@ -27,8 +27,6 @@ exports.create = (req, res) => {
         email: req.body.email,
         password: req.body.password,
         name: req.body.name,
-        reservationIds: [],
-        hotelIds: [],
         isAdmin: req.body.isAdmin || 0
     });
 
@@ -86,20 +84,19 @@ exports.update = (req, res) => {
 
     if (!req.body.name) {
         return res.status(400).send({
-            message: "Username can not be empty"
+            message: "User name can not be empty"
         });
     }
 
-
     if (!req.body.email) {
         return res.status(400).send({
-            message: "Username can not be empty"
+            message: "Email can not be empty"
         });
     }
 
     if (!req.body.password) {
         return res.status(400).send({
-            message: "Username can not be empty"
+            message: "Password can not be empty"
         });
     }
 
@@ -108,8 +105,6 @@ exports.update = (req, res) => {
             email: req.body.email,
             password: req.body.password,
             name: req.body.name,
-            reservationIds: req.body.reservationIds,
-            hotelIds: req.body.hotelIds,
             isAdmin: req.body.isAdmin
         }, {
             new: true
