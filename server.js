@@ -85,15 +85,13 @@ cron.schedule( '5 * * * * *', async () => {
 
     var https = require('https');
 
-    var options = {
+    var options = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
         host: 'hotel-system-api.herokuapp.com',
         path: '/reservations',
         headers: {
             'Accept': 'application/json'
         }
     };
-
-
 
     await https.get(options, function (res) {
         var json = [];
